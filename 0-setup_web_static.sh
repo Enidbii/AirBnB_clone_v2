@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Sets up a web server for deployment of web_static
 
 c_exists(){
 	command -v "$1" > /dev/null 2>&1;
@@ -11,7 +12,7 @@ fi
 
 mkdir -p /data/web_static/shared/
 mkdir -p /data/web_static/releases/test/
-echo  -e "This is simple content to test your Nginx configuration" | sudo tee /data/web_static/releases/test/index.html
+echo  -e "simple content to test your Nginx configuration" | sudo tee /data/web_static/releases/test/index.html
 
 ln -sf /data/web_static/releases/test /data/web_static/current
 sudo chown -R  ubuntu:ubuntu /data/
@@ -40,5 +41,3 @@ printf %s "server {
 }" > /etc/nginx/sites-available/default
 
 service nginx restart
-
-
