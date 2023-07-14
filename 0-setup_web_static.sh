@@ -1,19 +1,21 @@
 #!/usr/bin/env bash
-# sets up webservers for deployment of web_static
+# Sets up a web server for deployment of web_static
 
-exists()
-{
-  command -v "$1" >/dev/null 2>&1
+c_exists(){
+	command -v "$1" > /dev/null 2>&1;
 }
-if ! exists nginx;then
-	sudo apt-get -y update
-	sudo apt-get -y install nginx
-fi
+
+if ! c_exists nginx; then
+	sudo apt-get update
+	sudo apt-get install nginx -y
+fi 
+
+mkdir -p /data/web_static/shared/
 mkdir -p /data/web_static/releases/test/
-mkdir -p /data/web_static/shared
-echo "nginx is intersting" > /data/web_static/releases/test/index.html
-ln -sf /data/web_static/releases/test/ /data/web_static/current
-chown -hR ubuntu:ubuntu /data
+echo  -e "simple content to test your Nginx configuration" | sudo tee /data/web_static/releases/test/index.html
+
+ln -sf /data/web_static/releases/test /data/web_static/current
+sudo chown -R  ubuntu:ubuntu /data/
 
 printf %s "server {
     listen 80 default_server;
@@ -28,7 +30,7 @@ printf %s "server {
     }
 
     location /redirect_me {
-        return 301 http://enidchebet.tech/;
+        return 301 http://collotek.tech.com/;
     }
 
     error_page 404 /404.html;
