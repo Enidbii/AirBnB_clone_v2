@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-# fab script that generates .tgz archive from the contents of web static
+""" fab script that generates .tgz archive from
+the contents of web static"""
+
 from fabric.api import local
 from datetime import datetime
 
